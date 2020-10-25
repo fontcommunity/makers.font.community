@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains simple_affiliate.module.
+ */
+
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+
+/**
+ * Implements hook_user_insert().
+ *
+ */
+function simple_affiliate_user_insert($entity) {
+  if (isset($_COOKIE["simple_affiliate"])) {
+    // Checking if the tracking cookie is present and setting the value in the
+    // field.
+    $referral_id = $_COOKIE["simple_affiliate"];
+
+    $entity->set('field_simple_affiliate_referrals', $referral_id);
+    $entity->save();
+  }
+}
